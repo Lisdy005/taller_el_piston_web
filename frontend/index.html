@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taller Automotriz "El Pistón" - Gestión Integral</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container" onclick="cambiarVista('inicio')" style="cursor:pointer;">
+            <h1>🛠️ Taller "El Pistón"</h1>
+        </div>
+        <nav>
+            <a href="#" onclick="cambiarVista('inicio'); return false;" id="nav-inicio" class="active">Inicio</a>
+            <a href="#" onclick="cambiarVista('ordenes'); return false;" id="nav-ordenes">Órdenes</a>
+            <a href="#" onclick="cambiarVista('nueva-orden'); return false;" id="nav-nueva-orden">+ Nueva Orden</a>
+            <a href="#" onclick="cambiarVista('clientes'); return false;" id="nav-clientes">Clientes & Historial</a>
+            <a href="#" onclick="cambiarVista('mecanicos'); return false;" id="nav-mecanicos">Mecánicos</a>
+            <a href="#" onclick="cambiarVista('repuestos'); return false;" id="nav-repuestos">Repuestos</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- INICIO -->
+        <section id="vista-inicio" class="vista">
+            <div class="hero-banner">
+                <h2>Panel Gerencial de Control</h2>
+                <p>Resumen ejecutivo del taller: estado de órdenes, carga de mecánicos, saldos pendientes y stock crítico.</p>
+            </div>
+
+            <!-- Tarjetas KPI -->
+            <div class="grid-kpi">
+                <div class="tarjeta-kpi" onclick="cambiarVista('ordenes')">
+                    <div class="kpi-icon">📋</div>
+                    <div class="kpi-info">
+                        <span class="kpi-label">Órdenes Abiertas</span>
+                        <h3 id="kpi-ordenes-cant">6</h3>
+                    </div>
+                </div>
+                <div class="tarjeta-kpi" onclick="cambiarVista('repuestos')">
+                    <div class="kpi-icon">⚠️</div>
+                    <div class="kpi-info">
+                        <span class="kpi-label">Alertas de Stock </span>
+                        <h3 id="kpi-stock-cant" style="color: #ef4444;">3</h3>
+                    </div>
+                </div>
+                <div class="tarjeta-kpi" onclick="cambiarVista('clientes')">
+                    <div class="kpi-icon">👥</div>
+                    <div class="kpi-info">
+                        <span class="kpi-label">Deuda Clientes</span>
+                        <h3 id="kpi-saldo-cant" style="color: #f59e0b;">$290</h3>
+                    </div>
+                </div>
+                <div class="tarjeta-kpi" onclick="cambiarVista('ordenes')">
+                    <div class="kpi-icon">💰</div>
+                    <div class="kpi-info">
+                        <span class="kpi-label">Facturación Total</span>
+                        <h3 id="kpi-facturacion-cant" style="color: #059669;">$690</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-resumen-inicio">
+                <div class="tarjeta-dashboard">
+                    <h3>🚀 Accesos Rápidos del Dueño</h3>
+                    <div class="botones-rapidos">
+                        <button onclick="cambiarVista('nueva-orden')" class="btn-dashboard btn-primary">➕ Registrar Nueva Orden de Servicio</button>
+                        <button onclick="cambiarVista('ordenes')" class="btn-dashboard btn-info">🔍 Consultar Órdenes y Ciclo de Vida</button>
+                        <button onclick="cambiarVista('mecanicos')" class="btn-dashboard btn-secundary">👨‍🔧 Ver Carga de Trabajo de Mecánicos</button>
+                    </div>
+                </div>
+
+                <div class="tarjeta-dashboard">
+                    <h3>📊 Resumen de Rendimiento</h3>
+                    <ul class="lista-resumen-taller">
+                        <li><strong>Personal en activo:</strong> 2 Mecánicos y 1 Recepcionista</li>
+                        <li><strong>Vehículos atendidos:</strong> Registro histórico activo</li>
+                        <li><strong>Estado de Servidor:</strong> Sincronizado con PocketBase</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Registrar Nueva Orden -->
+        <section id="vista-nueva-orden" class="vista seccion-oculta tarjeta-formulario">
+            <h2>Registrar Nueva Orden de Servicio</h2>
+            <div id="mensaje-alerta-form" class="alerta-form seccion-oculta"></div>
+            <form id="form-orden" novalidate>
+                <div class="campo">
+                    <label for="vehiculo-id">Seleccionar Vehículo y Cliente:</label>
+                    <select id="vehiculo-id" required>
+                        <option value="">-- Seleccione un Vehículo --</option>
+                    </select>
+                </div>
+                <div class="campo">
+                    <label for="mecanico-id">Asignar Mecánico:</label>
+                    <select id="mecanico-id" required>
+                        <option value="">-- Seleccione un Mecánico --</option>
+                    </select>
+                </div>
+                <div class="campo">
+                    <label for="problema">Problema Reportado (Mínimo 10 caracteres):</label>
+                    <textarea id="problema" rows="3" placeholder="Describa la falla del vehículo..." required></textarea>
+                </div>
+                <div class="campo">
+                    <label for="mano-obra">Costo Mano de Obra ($):</label>
+                    <input type="number" id="mano-obra" value="50" min="0" required>
+                </div>
+                <div class="campo">
+                    <label for="monto-pagado">Monto Pagado Inicial ($):</label>
+                    <input type="number" id="monto-pagado" value="0" min="0" required>
+                </div>
+                <button type="submit" class="btn-guardar">Guardar Orden en el Taller</button>
+            </form>
+        </section>
+
+        <!-- Órdenes de Servicio -->
+        <section id="vista-ordenes" class="vista seccion-oculta">
+            <div class="seccion-cabecera">
+                <h2>Gestión y Ciclo de Órdenes de Servicio</h2>
+                <div class="controles-filtrado">
+                    <input type="text" id="buscador-ordenes" placeholder="Buscar por vehículo, matrícula..." onkeyup="filtrarOrdenes()">
+                    <select id="filtro-estado" onchange="filtrarOrdenes()">
+                        <option value="todos">Todos los Estados</option>
+                        <option value="recibida">Recibida</option>
+                        <option value="en_diagnostico">En Diagnóstico</option>
+                        <option value="en_reparacion">En Reparación</option>
+                        <option value="lista">Lista para entregar</option>
+                        <option value="entregada">Entregada</option>
+                        <option value="cancelada">Cancelada</option>
+                    </select>
+                </div>
+            </div>
+            <div id="lista-ordenes" class="grid-tarjetas"></div>
+        </section>
+
+        <!-- Clientes e Historial -->
+        <section id="vista-clientes" class="vista seccion-oculta">
+            <h2>Directorio de Clientes y Vehículos Asociados</h2>
+            <p style="margin-bottom: 15px; color: #475569;">Haga clic en cualquier cliente para consultar su historial de servicios y vehículos.</p>
+            <div id="lista-clientes" class="grid-tarjetas"></div>
+        </section>
+
+        <!-- Mecánicos y Carga de Trabajo -->
+        <section id="vista-mecanicos" class="vista seccion-oculta">
+            <h2>Carga de Trabajo Asignada por Mecánico</h2>
+            <div id="lista-mecanicos" class="grid-tarjetas"></div>
+        </section>
+
+        <!-- Repuestos -->
+        <section id="vista-repuestos" class="vista seccion-oculta">
+            <h2>Inventario de Repuestos (Alertas de Stock)</h2>
+            <div id="lista-repuestos" class="grid-tarjetas"></div>
+        </section>
+    </main>
+
+    <!-- Modal Detalle de Orden y Cambio de Estado -->
+    <div id="modal-detalle" class="modal-overlay seccion-oculta">
+        <div class="modal-content">
+            <h3>Detalles de la Orden de Servicio</h3>
+            <div id="modal-body"></div>
+            <div style="margin-top: 15px;">
+                <label for="nuevo-estado" style="font-weight: 600; font-size: 0.9rem;">Cambiar Estado de la Orden:</label>
+                <select id="nuevo-estado" style="width: 100%; padding: 8px; margin-top: 5px; margin-bottom: 15px; border-radius: 6px; border: 1px solid #94a3b8;">
+                    <option value="recibida">Recibida</option>
+                    <option value="en_diagnostico">En Diagnóstico</option>
+                    <option value="en_reparacion">En Reparación</option>
+                    <option value="lista">Lista para entregar</option>
+                    <option value="entregada">Entregada</option>
+                    <option value="cancelada">Cancelada</option>
+                </select>
+                <button onclick="guardarCambioEstado()" class="btn-guardar" style="width: 100%; padding: 8px;">Actualizar Estado</button>
+            </div>
+            <button onclick="cerrarModal()" class="btn-cerrar-modal">Cerrar</button>
+        </div>
+    </div>
+
+    <!-- Modal Historial de Cliente -->
+    <div id="modal-historial" class="modal-overlay seccion-oculta">
+        <div class="modal-content" style="max-width: 600px;">
+            <h3 id="historial-titulo">Historial del Cliente</h3>
+            <div id="historial-body" style="max-height: 350px; overflow-y: auto; margin-top: 10px;"></div>
+            <button onclick="cerrarModalHistorial()" class="btn-cerrar-modal">Cerrar Historial</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Taller Automotriz "El Pistón" - Programación para Dispositivos Móviles</p>
+    </footer>
+
+    <script src="app.js" defer></script>
+</body>
+</html>
