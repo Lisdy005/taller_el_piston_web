@@ -1,21 +1,20 @@
 # Sistema de Gestión para Taller Automotriz "El Pistón" 
 **Asignatura:** Programación Web  
-**Profesor:** Ing. Roilán Rodríguez Castillo [cite: 17]  
-**Estudiante:** Lisdania Diaz [cite: 17]  
+**Estudiante:** Lisdania Diaz 
 
 ---
 
 ## 1. Decisiones de Diseño y Arquitectura
-- **Arquitectura SPA (Single Page Application):** Desarrollada con HTML5, CSS3 y JavaScript Vanilla para garantizar un rendimiento fluido, transiciones instantáneas entre vistas y una experiencia de usuario (UX/UI) moderna sin recargas de página.
-- **Resiliencia de Datos (Mock & API):** Diseñado para interactuar mediante `fetch` con un servidor REST de **PocketBase**, incorporando un adaptador de datos de demostración robusto para evitar fallas durante la demostración o defensa en vivo.
-- **Modelo Relacional (PocketBase):** Estructurado bajo colecciones relacionales estrictas (`clientes`, `vehiculos`, `ordenes`, `users` y `repuestos`) para mantener la integridad referencial y cumplir con el ciclo de vida del taller (*recibida, en diagnóstico, en reparación, lista, entregada o cancelada*) [cite: 18].
+- **Arquitectura SPA (Single Page Application):** Desarrollada con HTML5, CSS3 y JavaScript Vanilla para garantizar un rendimiento fluido, transiciones instantáneas entre vistas y una experiencia de usuario (UX/UI) moderna sin recargas de página
+- **Resiliencia de Datos (Mock & API):** Diseñado para interactuar mediante `fetch` con un servidor REST de **PocketBase**, incorporando un adaptador de datos de demostración robusto para evitar fallas durante la demostración o defensa en vivo
+- **Modelo Relacional (PocketBase):** Estructurado bajo colecciones relacionales estrictas (`clientes`, `vehiculos`, `ordenes`, `users` y `repuestos`) para mantener la integridad referencial y cumplir con el ciclo de vida del taller (*recibida, en diagnóstico, en reparación, lista, entregada o cancelada*) 
 - **Gestión Gerencial ("Lo que el dueño necesita saber"):**
-  - Control de órdenes abiertas y sus estados en tiempo real [cite: 18].
-  - Métrica de carga de trabajo por mecánico [cite: 18].
-  - Historial de servicios detallado por cliente y vehículo [cite: 18].
-  - Control de saldos pendientes de cobro [cite: 18].
-  - Alertas automáticas de inventario crítico ($	ext{existencias} \le 5$) [cite: 18].
-  - Reporte y filtrado de facturación [cite: 18].
+  - Control de órdenes abiertas y sus estados en tiempo real 
+  - Métrica de carga de trabajo por mecánico 
+  - Historial de servicios detallado por cliente y vehículo
+  - Control de saldos pendientes de cobro 
+  - Alertas automáticas de inventario crítico ($	ext{existencias} \le 5$) 
+  - Reporte y filtrado de facturación 
 
 ---
 
